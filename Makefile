@@ -46,4 +46,4 @@ run: all
 
 # Städa
 clean:
-	rm -f $(TARGET)
+	rm -f $(TARGET) main.o
