@@ -32,8 +32,8 @@
 *.app
 
 # Node
-*/node_modules
+/node_modules
 *.log
 
-
+#app
 myapp

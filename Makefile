@@ -2,7 +2,8 @@
 TARGET = myapp
 
 # Källfiler
-SRCS = main.cpp
+BASE_PATH = base/
+SRCS =$(BASE_PATH)app.cpp main.cpp
 
 # Kompilator
 CXX = g++
@@ -25,7 +26,7 @@ ifeq ($(WX_CONFIG),)
 endif
 
 # Hämta flaggor från wx-config
-CXXFLAGS = -std=c++17 -Wall `wx-config --cxxflags`
+CXXFLAGS = -std=c++17 -Wall `wx-config --cxxflags` `wxDEBUG_LEVEL=0`
 LDFLAGS  = `wx-config --libs`
 
 
