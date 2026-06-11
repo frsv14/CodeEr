@@ -3,7 +3,7 @@
 
 #ifndef WX_PRECOMP
     #include <wx/wx.h>
-    #include "/home/frsv/CoderEr/CodeEr/main.h"
+    #include "../main.h"
 #endif
 
 class MyApp : public wxApp
