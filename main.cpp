@@ -3,6 +3,7 @@
 #define MAIN_CPP
 #include <wx/wx.h>
 #include <wx/wxprec.h>
+#include <wx/splitter.h>
 #include "main.h"
 
 wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
@@ -81,31 +82,24 @@ MyFrame::MyFrame(const wxString& title,
     SetStatusText("Hello from wxWidgets!");
 
     // Panel setup
+    wxSplitterWindow* splitter1 = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_THIN_SASH | wxSP_LIVE_UPDATE);
+    wxSplitterWindow* splitter2 = new wxSplitterWindow(splitter1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_THIN_SASH | wxSP_LIVE_UPDATE);
+    wxSplitterWindow* splitter3 = new wxSplitterWindow(splitter2, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_THIN_SASH | wxSP_LIVE_UPDATE);
 
-    wxPanel* panel_main = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-    wxPanel* panel_console = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-    wxPanel* panel_files = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-    wxPanel* panel_prod = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+    wxWindow* panel_main = new wxWindow(splitter1, wxID_ANY, wxPoint(0, 0), wxDefaultSize);
+    wxWindow* panel_console = new wxWindow(splitter2, wxID_ANY, wxPoint(0, 0), wxDefaultSize);
+    wxWindow* panel_files = new wxWindow(splitter3, wxID_ANY, wxPoint(0, 0), wxDefaultSize);
+    wxWindow* panel_prod = new wxWindow(splitter3, wxID_ANY, wxPoint(0, 0), wxDefaultSize);
 
-    panel_main->SetBackgroundColour(wxColour(100, 100, 100));
-    panel_console->SetBackgroundColour(wxColour(50, 50, 50));
-    panel_files->SetBackgroundColour(wxColour(100, 100, 200));
-    panel_prod->SetBackgroundColour(wxColour(50, 255, 50));
+    panel_main->SetBackgroundColour(wxColour(0, 255, 0)); //red
+    panel_console->SetBackgroundColour(wxColour(255, 0, 0)); //green
+    panel_files->SetBackgroundColour(wxColour(100, 12, 200)); // purple
+    panel_prod->SetBackgroundColour(wxColour(255, 255, 50)); // yellow
 
-    wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL); // use splitters intead of sizers for more features
-    wxBoxSizer* sizer_2 = new wxBoxSizer(wxVERTICAL);
+    splitter1->SplitHorizontally(splitter2, panel_main);
+    splitter2->SplitVertically(splitter3, panel_console);
+    splitter3->SplitVertically(panel_files, panel_prod);
 
-    sizer->Add(panel_main, 2, wxEXPAND | (wxLEFT & wxRIGHT), 10);
-    sizer->Add(panel_console, 1, wxEXPAND | (wxLEFT & wxRIGHT), 10);
-    sizer_2->Add(panel_files, 1, wxEXPAND | (wxLEFT & wxRIGHT), 10);
-    sizer_2->Add(panel_prod, 1, wxEXPAND | (wxLEFT & wxRIGHT), 10);
-
-
-    wxBoxSizer* sizer_3 = new wxBoxSizer(wxHORIZONTAL);
-    sizer_3->Add(sizer_2, 1, wxEXPAND, 10);
-    sizer_3->Add(sizer, 3, wxEXPAND, 10);
-
-    this->SetSizerAndFit(sizer_3);
 }
 
 void MyFrame::OnExit(wxCommandEvent& event)
